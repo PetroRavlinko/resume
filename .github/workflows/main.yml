@@ -10,3 +10,8 @@ jobs:
         uses: xu-cheng/latex-action@master
         with:
           root_file: CV.tex
+      - name: Upload PDF file
+        uses: actions/upload-artifact@master
+        with:
+          name: CV.pdf
+          path: ./  
