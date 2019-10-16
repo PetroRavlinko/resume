@@ -10,9 +10,9 @@ jobs:
         uses: xu-cheng/latex-action@master
         with:
           root_file: PetroRavlinko-CV.tex
+      - run: mkdir -p target
+      - run: mv PetroRavlinko-CV.pdf target/PetroRavlinko-CV.pdf
       - name: Upload PDF file
-        run: mkdir -p target
-        run: mv PetroRavlinko-CV.pdf target/PetroRavlinko-CV.pdf
         uses: actions/upload-artifact@master
         with:
           name: cv.zip
