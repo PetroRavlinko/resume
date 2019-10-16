@@ -9,9 +9,11 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@master
         with:
-          root_file: CV.tex
+          root_file: PetroRavlinko-CV.tex
       - name: Upload PDF file
+        run: mkdir -p target
+        run: mv PetroRavlinko-CV.pdf target/PetroRavlinko-CV.pdf
         uses: actions/upload-artifact@master
         with:
-          name: CV.pdf
-          path: ./  
+          name: cv.zip
+          path: ./target  
