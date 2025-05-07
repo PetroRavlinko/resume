@@ -18,6 +18,11 @@ jobs:
           name: cv.zip
           path: ./target
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: ./target/cv.zip
+
       - name: Convert PDF to HTML
         uses: SichangHe/pdf2htmlEX-action@v0.0.2
         with:
@@ -28,7 +33,7 @@ jobs:
         with:
           path: .
 
-  deploy:
+  deploy_pages:
       needs: build_latex
       permissions:
         pages: write
