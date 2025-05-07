@@ -21,7 +21,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          path: ./target/cv.zip
+          path: cv.zip
 
       - name: Convert PDF to HTML
         uses: SichangHe/pdf2htmlEX-action@v0.0.2
@@ -46,3 +46,29 @@ jobs:
         - name: Deploy to GitHub Pages
           id: deployment
           uses: actions/deploy-pages@v4
+
+        - name: Create Release
+          id: create_release
+          uses: actions/create-release@v1
+          if: github.event_name == 'push' # Створювати реліз тільки при push
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            tag_name: v${{ github.run_number }}
+            release_name: Release v${{ github.run_number }}
+            body: |
+              Automatically generated version of the resume on ${{ github.event.head_commit.timestamp }}.
+              Updated HTML after the latest changes.
+            draft: false
+            prerelease: false
+
+        - name: Upload Release Asset
+          uses: actions/upload-release-asset@v1
+          if: github.event_name == 'push'
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            asset_path: ./cv.zip
+            asset_name: cv.zip
+            asset_content_type: application/zip
