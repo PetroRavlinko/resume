@@ -1,4 +1,8 @@
 # Resume: Petro Ravlinko
+[![Build LaTeX document](https://github.com/PetroRavlinko/resume/actions/workflows/main.yml/badge.svg)](https://github.com/PetroRavlinko/resume/actions/workflows/main.yml)
+
+----
+
 My personal resume.
 
 ## Styles

@@ -1,4 +1,4 @@
-name: Build LaTeX document
+name: Build LaTeX document and Deploy to GitHub Pages
 on: [push]
 jobs:
   build_latex:
@@ -16,4 +16,28 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: cv.zip
-          path: ./target  
+          path: ./target
+
+      - name: Convert PDF to HTML
+        uses: SichangHe/pdf2htmlEX-action@v0.0.2
+        with:
+          arguments: target/PetroRavlinko-CV.pdf  index.html
+  
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+      needs: build_latex
+      permissions:
+        pages: write
+        id-token: write
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+      runs-on: ubuntu-latest
+      steps:
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v4
